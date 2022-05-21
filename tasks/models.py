@@ -10,3 +10,6 @@ class Task(models.Model):
     pub_date    = models.DateField(default=now)
     conc_date   = models.DateField()
     concluded   = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.name

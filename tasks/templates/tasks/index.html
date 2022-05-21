@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} Tasks {% endblock %}
+
+{% block content %}
+  {% if tasks.objects.all }
+    {% for task in tasks %}
+      <div>
+        <h3>{{task.name]}</h3>
+        <p>{{task.description}}</p>
+        
+
+      </div>
+    {% endfor %}
+{% endblock %}
