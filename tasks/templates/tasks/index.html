@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
-{% block title %} Tasks {% endblock %}
-
-{% block content %}
-  {% if tasks.objects.all }
-    {% for task in tasks %}
-      <div>
-        <h3>{{task.name]}</h3>
-        <p>{{task.description}}</p>
-        
-
-      </div>
-    {% endfor %}
-{% endblock %}
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'tasks/styles.css' %}">
+    <title>{% block title %} Tasks {% endblock %}</title>
+</head>
+<body>
+    
+    {% block content %}
+    
+        {% if tasks %}
+            {% for task in tasks %}
+                <div class="task">
+                    <h3>{{task.name}}</h3>
+                    <p>{{task.description}}</p>
+                    <a href=""></a>
+                    
+    
+                </div>
+                <p>Tarefas Completas: {{count}}</p>
+            {% endfor %}
+        {% else %}
+            <spam>No tasks available</spam>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
