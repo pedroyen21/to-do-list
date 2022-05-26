@@ -6,6 +6,7 @@
     <title>{% block title %}{% endblock %}</title>
    
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    {% block styles %}{% endblock styles %}
   </head>
   <body>
     <header class="base-header">
@@ -27,10 +28,10 @@
     <main>
         {% block content %}
         {% endblock %}
-    </main>
-    
+    </main>  
 
-    
+    {% block scripts %}
+    {% endblock scripts %}
 
   </body>
 </html>

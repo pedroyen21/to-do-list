@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Tasks {% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}"> 
+{% endblock styles %}
+
+{% block content %} 
+    <canvas id="meuCanvas"></canvas>
+    {% if tasks %}
+        {% for task in tasks %}
+            <div class="task">
+                <div class="show">
+                    <h3>{{task.name}}</h3>
+                    <p>{{task.description}}</p>
+                    <span>Data de conclusão: {{task.conc_date}}</span>
+                </div>
+                <div class="details">
+                    <input type="text" placeholder="{{task.name}}">
+                    <input type="text" placeholder="{{task.description}}">
+                    <input type="text" placeholder="{{task.conc_date}}">
+                </div>  
+            </div>
+            <p>Tarefas Completas: {{count}}</p>
+        {% endfor %}
+        
+    {% else %}
+        <spam>No tasks available</spam>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'tasks/js/scripts.js' %}" ></script>
+{% endblock scripts %}
+    
