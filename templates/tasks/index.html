@@ -2,32 +2,77 @@
 {% load static %}
 
 {% block title %} Tasks {% endblock %}
+
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}"> 
+   <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}"> 
 {% endblock styles %}
 
 {% block content %} 
-    <canvas id="meuCanvas"></canvas>
-    {% if tasks %}
-        {% for task in tasks %}
-            <div class="task">
-                <div class="show">
-                    <h3>{{task.name}}</h3>
-                    <p>{{task.description}}</p>
-                    <span>Data de conclusão: {{task.conc_date}}</span>
-                </div>
-                <div class="details">
-                    <input type="text" placeholder="{{task.name}}">
-                    <input type="text" placeholder="{{task.description}}">
-                    <input type="text" placeholder="{{task.conc_date}}">
-                </div>  
+   <main>
+      <section class="task-list">
+         <p>Completed tasks: {{count}}</p> 
+         
+            <div id="add-task-form">
+               <form 
+                  action="{% url 'tasks:create_task' %}" 
+                  method="post"
+               >{% csrf_token %}
+                  <input 
+                        type="text"                     
+                        name="name" 
+                        class="text"
+                  >
+                  <input 
+                        type="text"                     
+                        name="description" 
+                        class="text"
+                  >                    
+                  <input 
+                        type="date"
+                        name="conc_date"
+                  >
+                  <input 
+                     type="submit" 
+                     value="Add task"
+                  >
+                </form>
             </div>
-            <p>Tarefas Completas: {{count}}</p>
-        {% endfor %}
-        
-    {% else %}
-        <spam>No tasks available</spam>
-    {% endif %}
+            {% if tasks %}
+               {% for task in tasks %}
+                  <div class="task">                     
+                     <div class="content">
+                        <span>{{task.name}}</span>
+                        <span>{{task.description}}</span>
+                        <span>{{task.conc_date|date:"d/m/Y"}}</span>
+                     </div>
+                     <div class="actions">
+                        <form action="{% url 'tasks:edit_task' task.id %}"  method="get">
+                           {% csrf_token %}
+                           <input 
+                              type="submit" 
+                              value="Edit" 
+                              class="edit_task"
+                           >
+                        </form>
+ 
+                        <form action="{% url 'tasks:delete_task' task.id %}" method="post">
+                           {% csrf_token %}
+                           <input 
+                              type="submit" 
+                              value="Delete" 
+                              id="delete_task"
+                           >
+                        </form>                      
+                     </div>
+                  </div>
+                  
+               {% endfor %}           
+         {% else %}
+               <spam>No tasks available</spam>
+         {% endif %}
+        </section>
+    </main>
+    
 {% endblock %}
 
 {% block scripts %}

@@ -12,23 +12,29 @@
     <header class="base-header">
        <a class="home" href="{% url 'tasks:index' %}"><h1>Tasks</h1></a> 
        <nav class="menu">
-            <ul class="nav_links">
-                
+            <ul class="nav_links">                
                 {% if user.is_authenticated %}
-                    <li class=""><a class="" href="#"> {{ user.username }} </a></li>
-                    <li class=""><a class="" href="{% url 'account_logout' %}">Logout</a></li>
+                    <li>
+                        <span> {{ user.username }} </span>
+                    </li>
+                    <li>
+                        <a href="{% url 'account_logout' %}">Logout</a></li>
                 {% else %}
-                    <li class=""><a class="" href="{% url 'account_login' %}">Login</a></li>
-                    <li class=""></li><a class="" href="{% url 'account_signup' %}">SignUp</a></li>
+                    <li>
+                        <a  href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'account_signup' %}">SignUp</a>
+                    </li>
                 {% endif %}
             </ul>
            
         </nav>
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>  
+    
+    {% block content %}
+    {% endblock %}
+      
 
     {% block scripts %}
     {% endblock scripts %}

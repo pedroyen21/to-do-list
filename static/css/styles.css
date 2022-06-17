@@ -4,7 +4,6 @@
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
 li, a{
     
     font-size: 1.5rem;
@@ -32,11 +31,6 @@ header {
     color: aqua;
 }
 
-main {
-    width: 70vw;
-    margin: auto;
-
-}
 
 
 .submit-button {
@@ -53,7 +47,6 @@ main {
     transition: .3s;
 }
 .warning {
-    background-color: rgb(253, 55, 55);
-    
+    background-color: rgb(253, 55, 55);    
 }
 
