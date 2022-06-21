@@ -14,9 +14,9 @@ urlpatterns = [
       name='create_task',
    ),
    path(
-      route='delete_task/<int:pk>',
-      view=views.delete_task,
-      name='delete_task',
+      route='task_confirm_delete/<int:pk>',
+      view=views.DeleteTask.as_view(),
+      name='task_confirm_delete',
    ),
    path(
       route='edit_task/<int:pk>',

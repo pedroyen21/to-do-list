@@ -3,9 +3,9 @@
 {% block head_title %}Logout{% endblock %}
 
 {% block content %}
-<h1>Sair</h1>
+<h1>Logout</h1>
 
-<p>Tem certeza de que deseja sair?</p>
+<p>Are you sure you want to log out?</p>
 
 <form method="post" action="{% url 'account_logout' %}">
   {% csrf_token %}

@@ -21,15 +21,18 @@
                         type="text"                     
                         name="name" 
                         class="text"
+                        required
                   >
                   <input 
                         type="text"                     
                         name="description" 
                         class="text"
+                                 
                   >                    
                   <input 
                         type="date"
                         name="conc_date"
+                        required
                   >
                   <input 
                      type="submit" 
@@ -55,7 +58,7 @@
                            >
                         </form>
  
-                        <form action="{% url 'tasks:delete_task' task.id %}" method="post">
+                        <form action="{% url 'tasks:task_confirm_delete' task.id %}" method="get">
                            {% csrf_token %}
                            <input 
                               type="submit" 

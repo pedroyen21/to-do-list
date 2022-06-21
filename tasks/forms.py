@@ -1,5 +1,7 @@
 from django import forms
 from .models import Task
+from django.utils.timezone import now
+
 
 class UpdateForm(forms.ModelForm):
    conc_date = forms.DateField(
@@ -8,10 +10,10 @@ class UpdateForm(forms.ModelForm):
          format= '%Y-%m-%d',
          attrs={
             'type': 'date',
+            
          },
-      ), input_formats=['%Y-%m-%d']      
-   
-)
+      ), input_formats=['%Y-%m-%d']   
+   )
    class Meta: 
       model  = Task
       fields = ('name', 'description', 'conc_date')

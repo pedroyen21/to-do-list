@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from .forms import UpdateForm
 
 class IndexView(generic.ListView, LoginRequiredMixin):
@@ -35,10 +36,11 @@ def create_task(request):
 
    return HttpResponseRedirect('/')
 
-def delete_task(request, pk):
-   task_to_be_deleted = Task.objects.get(id=pk)
-   task_to_be_deleted.delete()
-   return HttpResponseRedirect('/')
+class DeleteTask(DeleteView):
+   template_name = 'tasks/task_confirm_delete.html'
+   model         = Task
+   success_url   = reverse_lazy('tasks:index')
+   
 
 class EditTask(UpdateView):
    template_name = 'tasks/edit_task.html'
