@@ -1,0 +1,30 @@
+<header class="base-header">
+   <a class="home" href="{% url 'tasks:index' %}">
+      <h1>To Do List</h1>
+   </a> 
+   <nav class="menu">
+      <ul class="nav_links">                
+         {% if user.is_authenticated %}
+            <li>
+               {{ user.username }} 
+            </li>
+            <li>
+               <a href="{% url 'account_logout' %}">
+                  Logout
+               </a>
+            </li>
+         {% else %}
+            <li>
+               <a  href="{% url 'account_login' %}">
+                  Login
+               </a>
+            </li>
+            <li>
+               <a href="{% url 'account_signup' %}">
+                  SignUp
+               </a>
+            </li>
+         {% endif %}
+      </ul>           
+   </nav>
+</header>

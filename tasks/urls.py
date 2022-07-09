@@ -23,5 +23,10 @@ urlpatterns = [
       view=views.EditTask.as_view(),
       name='edit_task',
    ),
+   path(
+      route='conclude_task/<int:pk>',
+      view=views.conclude_task,
+      name='conclude_task',
+   )
 
 ]

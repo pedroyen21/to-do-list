@@ -16,7 +16,8 @@ class IndexView(generic.ListView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            context['tasks'] = context['tasks'].filter(user=self.request.user).order_by('conc_date')
+            context['todo_tasks'] = context['tasks'].filter(concluded=False).order_by('conc_date')
+            context['concluded_tasks'] = context['tasks'].filter(concluded=True).order_by('pub_date')
             context['count'] = context['tasks'].filter(concluded=True).count()
         else:
             context = {}
@@ -32,20 +33,27 @@ def create_task(request):
                conc_date   =request.POST['conc_date']
       )
       new_task.save()
-      
-
    return HttpResponseRedirect('/')
-
-class DeleteTask(DeleteView):
-   template_name = 'tasks/task_confirm_delete.html'
-   model         = Task
-   success_url   = reverse_lazy('tasks:index')
-   
 
 class EditTask(UpdateView):
    template_name = 'tasks/edit_task.html'
-   form_class    = UpdateForm
-   success_url   = '/'
    model = Task
+   form_class = UpdateForm
+   success_url = '/'
+
+class DeleteTask(DeleteView):
+   template_name = 'tasks/task_confirm_delete.html'
+   model = Task
+   success_url = reverse_lazy('tasks:index')
+   
+def conclude_task(request, pk):
+   if request.method == 'POST':
+      task = Task.objects.get(id=pk)
+      task.concluded = True
+      task.save()
+   return HttpResponseRedirect('/')
+
+
+
 
     

@@ -1,24 +1,33 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %} Tasks {% endblock %}
-
-{% block styles %}
-   <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}"> 
-{% endblock styles %}
+{% block title %} To Do List {% endblock %}
 
 {% block content %} 
    <main>
-      <section class="task-list">
-         <p>Completed tasks: {{count}}</p> 
-         
+      <input type="checkbox" id="toggle-concluded-tasks" >
+      </input>
+      <label for="toggle-concluded-tasks">Show concluded tasks</label>    
+      
+      <section class="concluded-tasks">
+         <p>Concluded tasks: {{count}}</p>
+         {% for concluded_task in concluded_tasks %}
+            <div class="concluded-task">
+               <p class="task-title">{{ concluded_task.name }}</p>
+               <p class="task-description">{{ concluded_task.description }}</p>
+               <p>Date of conclusion: {{ concluded_task.conc_date|date:"d/m/Y" }}</p>
+            </div>
+         {% empty %}
+            <p> There is no concluded tasks.</p>
+         {% endfor %}
+      </section>
+      <section class="task-list">                  
             <div id="add-task-form">
                <form 
                   action="{% url 'tasks:create_task' %}" 
                   method="post"
                >{% csrf_token %}
                   <input 
-                        type="text"                     
+                        type="text"                
                         name="name" 
                         class="text"
                         required
@@ -26,8 +35,7 @@
                   <input 
                         type="text"                     
                         name="description" 
-                        class="text"
-                                 
+                        class="text"                                 
                   >                    
                   <input 
                         type="date"
@@ -40,45 +48,48 @@
                   >
                 </form>
             </div>
-            {% if tasks %}
-               {% for task in tasks %}
-                  <div class="task">                     
-                     <div class="content">
-                        <span>{{task.name}}</span>
-                        <span>{{task.description}}</span>
-                        <span>{{task.conc_date|date:"d/m/Y"}}</span>
-                     </div>
-                     <div class="actions">
-                        <form action="{% url 'tasks:edit_task' task.id %}"  method="get">
-                           {% csrf_token %}
-                           <input 
-                              type="submit" 
-                              value="Edit" 
-                              class="edit_task"
-                           >
-                        </form>
- 
-                        <form action="{% url 'tasks:task_confirm_delete' task.id %}" method="get">
-                           {% csrf_token %}
-                           <input 
-                              type="submit" 
-                              value="Delete" 
-                              id="delete_task"
-                           >
-                        </form>                      
-                     </div>
+            {% for task in todo_tasks %}
+               <div class="task">                     
+                  <div class="content">
+                     <span>{{task.name}}</span>
+                     <span>{{task.description}}</span>
+                     <span>{{task.conc_date|date:"d/m/Y"}}</span>
                   </div>
-                  
-               {% endfor %}           
-         {% else %}
-               <spam>No tasks available</spam>
-         {% endif %}
+                  <div class="actions">
+                     <form action="{% url 'tasks:conclude_task' task.id %}"  method="post">
+                        {% csrf_token %}
+                        <input 
+                           type="submit" 
+                           value="Conclude task" 
+                           class="action"
+                        >
+                     </form>
+                     <form action="{% url 'tasks:edit_task' task.id %}"  method="get">
+                        {% csrf_token %}
+                        <input 
+                           type="submit" 
+                           value="Edit" 
+                           class="edit_task"
+                        >
+                     </form>
+
+                     <form action="{% url 'tasks:task_confirm_delete' task.id %}" method="get">
+                        {% csrf_token %}
+                        <input 
+                           type="submit" 
+                           value="Delete" 
+                           id="delete_task"
+                        >
+                     </form>                      
+                  </div>
+               </div>
+               
+            {% empty %}   
+               <span>No tasks available</span>
+            {% endfor %}  
         </section>
     </main>
     
 {% endblock %}
 
-{% block scripts %}
-    <script src="{% static 'tasks/js/scripts.js' %}" ></script>
-{% endblock scripts %}
     

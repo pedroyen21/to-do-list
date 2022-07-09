@@ -1,43 +1,11 @@
 <html lang="en">
-    {% load static %}
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">  
-    <title>{% block title %}{% endblock %}</title>
-   
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
-    {% block styles %}{% endblock styles %}
-  </head>
-  <body>
-    <header class="base-header">
-       <a class="home" href="{% url 'tasks:index' %}"><h1>Tasks</h1></a> 
-       <nav class="menu">
-            <ul class="nav_links">                
-                {% if user.is_authenticated %}
-                    <li>
-                        <span> {{ user.username }} </span>
-                    </li>
-                    <li>
-                        <a href="{% url 'account_logout' %}">Logout</a></li>
-                {% else %}
-                    <li>
-                        <a  href="{% url 'account_login' %}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'account_signup' %}">SignUp</a>
-                    </li>
-                {% endif %}
-            </ul>
-           
-        </nav>
-    </header>
-    
-    {% block content %}
-    {% endblock %}
-      
+  
+   {% include "head.html" %}
+   <body>
+      {% include "header.html" %}
 
-    {% block scripts %}
-    {% endblock scripts %}
+      {% block content %}
+      {% endblock %}
 
-  </body>
+   </body>
 </html>
