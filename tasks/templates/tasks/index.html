@@ -3,7 +3,7 @@
 {% block title %} To Do List {% endblock %}
 
 {% block content %} 
-   <main>
+ 
       <input type="checkbox" id="toggle-concluded-tasks" >
       </input>
       <label for="toggle-concluded-tasks">Show concluded tasks</label>    
@@ -11,8 +11,8 @@
       <section class="concluded-tasks">
          <p>Concluded tasks: {{count}}</p>
          {% for concluded_task in concluded_tasks %}
-            <div class="concluded-task">
-               <p class="task-title">{{ concluded_task.name }}</p>
+            <div class="card concluded-task">
+               <h3 class="task-title">{{ concluded_task.name }}</h3>
                <p class="task-description">{{ concluded_task.description }}</p>
                <p>Date of conclusion: {{ concluded_task.conc_date|date:"d/m/Y" }}</p>
             </div>
@@ -40,6 +40,7 @@
                   <input 
                         type="date"
                         name="conc_date"
+                        max="2050-12-31"
                         required
                   >
                   <input 
@@ -49,19 +50,20 @@
                 </form>
             </div>
             {% for task in todo_tasks %}
-               <div class="task">                     
+               <div class="card task">                     
                   <div class="content">
-                     <span>{{task.name}}</span>
-                     <span>{{task.description}}</span>
-                     <span>{{task.conc_date|date:"d/m/Y"}}</span>
+                     <p class="card-title">{{task.name}}</p>
+                     <p class="card-description">{{task.description}}</p>
+                     <p class="card-conc_date">{{task.conc_date|date:"d/m/Y"}}</p>
                   </div>
                   <div class="actions">
                      <form action="{% url 'tasks:conclude_task' task.id %}"  method="post">
                         {% csrf_token %}
                         <input 
                            type="submit" 
-                           value="Conclude task" 
-                           class="action"
+                           value="Conclude task"
+                           class="action" 
+                           id="conclude-task"
                         >
                      </form>
                      <form action="{% url 'tasks:edit_task' task.id %}"  method="get">
@@ -69,7 +71,8 @@
                         <input 
                            type="submit" 
                            value="Edit" 
-                           class="edit_task"
+                           class="action"
+                           id="edit-task"
                         >
                      </form>
 
@@ -78,7 +81,8 @@
                         <input 
                            type="submit" 
                            value="Delete" 
-                           id="delete_task"
+                           class="action"
+                           id="delete-task"
                         >
                      </form>                      
                   </div>
@@ -88,7 +92,6 @@
                <span>No tasks available</span>
             {% endfor %}  
         </section>
-    </main>
     
 {% endblock %}
 
